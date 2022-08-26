@@ -1,20 +1,9 @@
-<header>
-    <div class="header-logo">
-        <a href="/">TweetApp</a>
-    </div>
-    <ul class="header-menus">
-        <li>
-            <a href="/about">TweetAppとは</a>
-        </li>
-    </ul>
-</header>
-
 <div class="main posts-index">
-<div class="container">
-    <% @posts.each do |post| %>
-    <div class="posts-index-item">
-        <%= post.content %>
+    <div class="container">
+        <% @posts.each do |post| %>
+        <div class="posts-index-item">
+            <%= post.content %>
+        </div>
+        <% end %>
     </div>
-    <% end %>
-</div>
 </div>
