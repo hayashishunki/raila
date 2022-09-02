@@ -31,6 +31,6 @@ class PostsController < ApplicationController
     @post = Post.find_by(id: params[:id])
     @post.destroy
     
-    redirect_to("/posts/index")
+    redirect_to "/posts/index"
   end
 end
