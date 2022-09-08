@@ -1,24 +1,19 @@
 # README
 
-This README would normally document whatever steps are necessary to get the
-application up and running.
+Railsポートフォリオ作成
 
-Things you may want to cover:
+docker使用の為、自分のPCにcloneしてもらい下記コマンドを順番に実行してください。
 
-* Ruby version
+※ちなみにdockerデスクトップのインストールと立ち上げが必要です。
+~~~
+docker compose build
+~~~
 
-* System dependencies
+~~~
+docker compose up -d
+~~~
 
-* Configuration
+アドレスバーに下記入力
+> localhost:3000
 
-* Database creation
-
-* Database initialization
-
-* How to run the test suite
-
-* Services (job queues, cache servers, search engines, etc.)
-
-* Deployment instructions
-
-* ...
+で表示出来ます。
