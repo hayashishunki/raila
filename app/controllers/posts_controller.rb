@@ -8,7 +8,7 @@ class PostsController < ApplicationController
     # idでPost.find(params[:id])にしない理由はありますか？
     # そもそも詳細画面で@postがnilになるケースはエラー扱いなので、フロントに渡す前にここでエラー処理した方がいいです。
     # 他の部分も同様です。
-    @post = Post.find_by(id: params[:id])
+    @post = Post.find(params[:id])
   end
 
   def new
