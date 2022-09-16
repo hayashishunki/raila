@@ -18,19 +18,23 @@ class PostsController < ApplicationController
         return @post
     else
       flash[:notice] = "データが存在しませんやり直してください"
-      redirect_to "/posts/index"
+      redirect_to "posts/index"
     end
   end
 
   def new
-    @post = Post.new
+    if @post = Post.new
+      return @post
+    else
+      render "posts/new"
+    end
   end
 
   def create
     @post = Post.create(post_params)
     begin
       @post.save!
-      redirect_to posts_index_path, flash: { notice: '投稿を作成しました' }
+      redirect_to "/posts/index", flash: { notice: '投稿を作成しました' }
     rescue => exception
       render "posts/new"
     end
@@ -48,21 +52,23 @@ class PostsController < ApplicationController
 
   def update
     @post = Post.find(params[:id])
-    # @post.content = Post.update(post_params)
-    begin
-      @post.save!
+    if @post.update(post_params)
       flash[:notice] = "投稿を編集しました"
       redirect_to "/posts/index"
-    rescue => exception
+    else
       render "posts/edit"
     end
   end
 
   def destroy
     @post = Post.find(params[:id])
-    @post.destroy
-    flash[:notice] = "投稿を削除しました"
-    redirect_to "/posts/index"
+    if @post.destroy
+      flash[:notice] = "投稿を削除しました"
+      redirect_to "/posts/index"
+    else
+      flash[:notice] = "投稿を削除出来ませんでした"
+      redirect_to "/posts/index"
+    end
   end
 
   private
