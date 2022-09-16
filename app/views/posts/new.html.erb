@@ -10,7 +10,7 @@
                         </div>
                     <% end %>
                     <%= form.label :content %><br>
-                    <%= form.text_area :content, value: params[:content] %>
+                    <%= form.text_area :content, value: @post.content %>
                     <%= form.submit %>
                 </div>
             </div>

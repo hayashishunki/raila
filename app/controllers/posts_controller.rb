@@ -44,7 +44,7 @@ class PostsController < ApplicationController
       return @post
     else
       flash[:notice] = 'データが存在しませんやり直してください'
-      redirect_to "/posts/#{@post.id}/edit"
+      render "/posts/#{@post.id}/edit"
     end
   end
 
