@@ -1,24 +1,22 @@
 class PostsController < ApplicationController
-  
-  # require 'active_support/all'
 
   def index
     @posts = Post.all.order(created_at: :desc)
     if @post.blank?
       return @post
     else
-      flash[:notice] = "値が存在しません管理者に問い合わせてください"
-      redirect_to "/"
+      flash[:notice] = '値が存在しません管理者に問い合わせてください'
+      redirect_to '/'
     end
   end
 
   def show
     @post = Post.find(params[:id])
     if @post.present?
-        return @post
+      return @post
     else
-      flash[:notice] = "データが存在しませんやり直してください"
-      redirect_to "posts/index"
+      flash[:notice] = 'データが存在しませんやり直してください'
+      redirect_to 'posts/index'
     end
   end
 
@@ -26,7 +24,7 @@ class PostsController < ApplicationController
     if @post = Post.new
       return @post
     else
-      render "posts/new"
+      render 'posts/new'
     end
   end
 
@@ -34,9 +32,9 @@ class PostsController < ApplicationController
     @post = Post.create(post_params)
     begin
       @post.save!
-      redirect_to "/posts/index", flash: { notice: '投稿を作成しました' }
+      redirect_to '/posts/index', flash: { notice: '投稿を作成しました' }
     rescue => exception
-      render "posts/new"
+      render 'posts/new'
     end
   end
 
@@ -45,7 +43,7 @@ class PostsController < ApplicationController
     if @post.present?
       return @post
     else
-      flash[:notice] = "データが存在しませんやり直してください"
+      flash[:notice] = 'データが存在しませんやり直してください'
       redirect_to "/posts/#{@post.id}/edit"
     end
   end
@@ -53,26 +51,26 @@ class PostsController < ApplicationController
   def update
     @post = Post.find(params[:id])
     if @post.update(post_params)
-      flash[:notice] = "投稿を編集しました"
-      redirect_to "/posts/index"
+      flash[:notice] = '投稿を編集しました'
+      redirect_to '/posts/index'
     else
-      render "posts/edit"
+      render 'posts/edit'
     end
   end
 
   def destroy
     @post = Post.find(params[:id])
     if @post.destroy
-      flash[:notice] = "投稿を削除しました"
-      redirect_to "/posts/index"
+      flash[:notice] = '投稿を削除しました'
+      redirect_to '/posts/index'
     else
-      flash[:notice] = "投稿を削除出来ませんでした"
-      redirect_to "/posts/index"
+      flash[:notice] = '投稿を削除出来ませんでした'
+      redirect_to '/posts/index'
     end
   end
 
   private
-  def post_params
-    params.permit(:content)
-  end
+    def post_params
+      params.permit(:content)
+    end
 end
