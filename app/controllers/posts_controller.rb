@@ -2,7 +2,7 @@ class PostsController < ApplicationController
 
   def index
     @posts = Post.all.order(created_at: :desc)
-    if @post.blank?
+    if @posts.present?
       return @post
     else
       flash[:notice] = '値が存在しません管理者に問い合わせてください'
@@ -12,11 +12,8 @@ class PostsController < ApplicationController
 
   def show
     @post = Post.find(params[:id])
-    if @post.present?
-      return @post
-    else
-      flash[:notice] = 'データが存在しませんやり直してください'
-      redirect_to 'posts/index'
+    if @post.blank?
+      redirect_to posts_path, flash: { notice: 'データが存在しませんやり直してください' }
     end
   end
 
@@ -34,7 +31,7 @@ class PostsController < ApplicationController
       @post.save!
       redirect_to '/posts/index', flash: { notice: '投稿を作成しました' }
     rescue => exception
-      render 'posts/new'
+      render 'posts/new', flash: { notice: '投稿に失敗しましたやり直してください' }
     end
   end
 
@@ -44,7 +41,7 @@ class PostsController < ApplicationController
       return @post
     else
       flash[:notice] = 'データが存在しませんやり直してください'
-      render "/posts/#{@post.id}/edit"
+      render :edit
     end
   end
 
@@ -62,11 +59,10 @@ class PostsController < ApplicationController
     @post = Post.find(params[:id])
     if @post.destroy
       flash[:notice] = '投稿を削除しました'
-      redirect_to '/posts/index'
     else
       flash[:notice] = '投稿を削除出来ませんでした'
-      redirect_to '/posts/index'
     end
+    redirect_to '/posts/index'
   end
 
   private
