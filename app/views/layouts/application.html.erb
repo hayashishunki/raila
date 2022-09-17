@@ -15,10 +15,9 @@
         <%= link_to "PgTweet", "/" %>
       </div>
       <ul class="header-menus">
-        <% if session[:user_id] %>
+        <% if @current_user %>
           <li>
-            ログイン中
-            <%= "No.#{session[:user_id]}" %>
+            <%= link_to @current_user.name, "/users/#{@current_user.id}" %>
           </li>
           <li>
             <%= link_to "投稿一覧", "/posts/index" %>
