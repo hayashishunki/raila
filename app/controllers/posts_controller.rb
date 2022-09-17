@@ -1,9 +1,10 @@
-class PostsController < ApplicationController
+# frozen_string_literal: true
 
+class PostsController < ApplicationController
   def index
     @posts = Post.all.order(created_at: :desc)
     if @posts.present?
-      return @post
+      @post
     else
       flash[:notice] = '値が存在しません管理者に問い合わせてください'
       redirect_to '/'
@@ -12,14 +13,12 @@ class PostsController < ApplicationController
 
   def show
     @post = Post.find(params[:id])
-    if @post.blank?
-      redirect_to posts_path, flash: { notice: 'データが存在しませんやり直してください' }
-    end
+    redirect_to posts_path, flash: { notice: 'データが存在しませんやり直してください' } if @post.blank?
   end
 
   def new
     if @post = Post.new
-      return @post
+      @post
     else
       render 'posts/new'
     end
@@ -30,7 +29,7 @@ class PostsController < ApplicationController
     begin
       @post.save!
       redirect_to '/posts/index', flash: { notice: '投稿を作成しました' }
-    rescue => exception
+    rescue StandardError => e
       render 'posts/new', flash: { notice: '投稿に失敗しましたやり直してください' }
     end
   end
@@ -38,7 +37,7 @@ class PostsController < ApplicationController
   def edit
     @post = Post.find(params[:id])
     if @post.present?
-      return @post
+      @post
     else
       flash[:notice] = 'データが存在しませんやり直してください'
       render :edit
@@ -57,16 +56,17 @@ class PostsController < ApplicationController
 
   def destroy
     @post = Post.find(params[:id])
-    if @post.destroy
-      flash[:notice] = '投稿を削除しました'
-    else
-      flash[:notice] = '投稿を削除出来ませんでした'
-    end
+    flash[:notice] = if @post.destroy
+                       '投稿を削除しました'
+                     else
+                       '投稿を削除出来ませんでした'
+                     end
     redirect_to '/posts/index'
   end
 
   private
-    def post_params
-      params.permit(:content)
-    end
+
+  def post_params
+    params.permit(:content)
+  end
 end
