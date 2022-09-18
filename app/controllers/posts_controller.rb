@@ -3,65 +3,49 @@
 class PostsController < ApplicationController
   def index
     @posts = Post.all.order(created_at: :desc)
-    if @posts.present?
-      @post
-    else
-      flash[:notice] = '値が存在しません管理者に問い合わせてください'
-      redirect_to '/'
-    end
   end
 
   def show
-    @post = Post.find(params[:id])
-    redirect_to posts_path, flash: { notice: 'データが存在しませんやり直してください' } if @post.blank?
+    @post = Post.find_by(id: params[:id])
+    redirect_to posts_index_path, flash: { notice: 'データが存在しませんやり直してください' } if @post.blank?
   end
 
   def new
-    if @post = Post.new
-      @post
-    else
-      render 'posts/new'
-    end
+    @post = Post.new
   end
 
   def create
     @post = Post.create(post_params)
-    begin
-      @post.save!
-      redirect_to '/posts/index', flash: { notice: '投稿を作成しました' }
-    rescue StandardError => e
-      render 'posts/new', flash: { notice: '投稿に失敗しましたやり直してください' }
-    end
+    @post.save!
+    redirect_to '/posts/index', flash: { notice: '投稿を作成しました' }
+  rescue StandardError
+    render 'posts/new'
   end
 
   def edit
     @post = Post.find(params[:id])
-    if @post.present?
-      @post
-    else
-      flash[:notice] = 'データが存在しませんやり直してください'
-      render :edit
-    end
+    # TODO:: notice->errorに修正します。(viewも修正)
+    render :edit, flash: { notice: 'データが存在しませんやり直してください' } if @post.blank?
   end
 
   def update
     @post = Post.find(params[:id])
-    if @post.update(post_params)
-      flash[:notice] = '投稿を編集しました'
-      redirect_to '/posts/index'
-    else
-      render 'posts/edit'
-    end
+    @post.update(post_params)
+    flash[:notice] = '投稿を編集しました'
+    redirect_to '/posts/index'
+  rescue
+    flash[:notice] = '予期せぬエラーの為投稿を編集出来ませんでした'
+    render :edit
   end
 
   def destroy
     @post = Post.find(params[:id])
-    flash[:notice] = if @post.destroy
-                       '投稿を削除しました'
-                     else
-                       '投稿を削除出来ませんでした'
-                     end
-    redirect_to '/posts/index'
+    @post.destroy!
+    flash[:notice] = '投稿を削除しました'
+    redirect_to posts_index_path
+  rescue
+    flash[:error] = '投稿を削除出来ませんでした'
+    render :edit
   end
 
   private
