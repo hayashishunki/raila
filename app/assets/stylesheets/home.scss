@@ -34,7 +34,7 @@
   /* 共通レイアウト ================================ */
   body {
     color: #2d3133;
-    background-color: gray;
+    background-color: white;
     margin: 0;
     min-height: 1vh;
   }
@@ -60,6 +60,7 @@
     z-index: 1;
     width: 100%;
     border-bottom: medium solid white;
+    background-color: gray;
   }
   .header-logo {
     float: left;
@@ -131,7 +132,7 @@
   /* about ================================ */
   .about-main {
     padding: 180px 8% 0;
-    color: white;
+    color: black;
   }
   .about-main h2 {
     font-size: 64px;

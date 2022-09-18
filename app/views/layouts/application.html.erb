@@ -1,7 +1,7 @@
 <!DOCTYPE html>
 <html>
   <head>
-    <title>AppName</title>
+    <title>PgTweet</title>
     <meta name="viewport" content="width=device-width,initial-scale=1">
     <%= csrf_meta_tags %>
     <%= csp_meta_tag %>
@@ -19,6 +19,8 @@
         <li><%= link_to "PgTweetとは", "/about" %></li>
         <li><%= link_to "投稿一覧", "/posts/index" %></li>
         <li><%= link_to "新規投稿", "/posts/new" %></li>
+        <li><%= link_to "ユーザーリスト", "/users/index" %></li>
+        <li><%= link_to "新規登録", "/signup" %></li>
       </ul>
     </header>
     <% if flash.present? %>

@@ -3,3 +3,6 @@ ja:
     attributes:
       post:
         content: 内容
+      user:
+        name: 名前
+        email: メールアドレス

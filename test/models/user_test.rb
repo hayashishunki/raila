@@ -1,15 +1,18 @@
 # == Schema Information
 #
-# Table name: posts
+# Table name: users
 #
 #  id         :bigint           not null, primary key
-#  content    :text
+#  email      :string
+#  image_name :string
+#  name       :string
+#  password   :string
 #  created_at :datetime         not null
 #  updated_at :datetime         not null
 #
 require "test_helper"
 
-class PostTest < ActiveSupport::TestCase
+class UserTest < ActiveSupport::TestCase
   # test "the truth" do
   #   assert true
   # end
