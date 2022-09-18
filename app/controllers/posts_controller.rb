@@ -24,7 +24,7 @@ class PostsController < ApplicationController
 
   def edit
     @post = Post.find(params[:id])
-    # TODO:: notice->errorに修正します。(viewも修正)
+    # TODO: : notice->errorに修正します。(viewも修正)
     render :edit, flash: { notice: 'データが存在しませんやり直してください' } if @post.blank?
   end
 
@@ -33,7 +33,7 @@ class PostsController < ApplicationController
     @post.update(post_params)
     flash[:notice] = '投稿を編集しました'
     redirect_to '/posts/index'
-  rescue
+  rescue StandardError
     flash[:notice] = '予期せぬエラーの為投稿を編集出来ませんでした'
     render :edit
   end
@@ -43,7 +43,7 @@ class PostsController < ApplicationController
     @post.destroy!
     flash[:notice] = '投稿を削除しました'
     redirect_to posts_index_path
-  rescue
+  rescue StandardError
     flash[:error] = '投稿を削除出来ませんでした'
     render :edit
   end
