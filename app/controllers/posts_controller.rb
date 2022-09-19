@@ -23,7 +23,7 @@ class PostsController < ApplicationController
   def edit
     @post = Post.find(params[:id])
     # TODO: : notice->errorに修正します。(viewも修正)
-    render :edit, flash: { notice: 'データが存在しませんやり直してください' } if @post.blank?
+    render :edit, flash: { notice: '無効な値ですやり直してください' } if @post.blank?
   end
 
   def update

@@ -44,7 +44,7 @@
         <% end %>
       </ul>
     </header>
-    <% if flash[:notice] %>
+    <% if flash.present? %>
       <div class="flash">
         <%= flash[:notice] %>
       </div>
