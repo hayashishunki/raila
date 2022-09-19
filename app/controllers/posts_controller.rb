@@ -7,7 +7,7 @@ class PostsController < ApplicationController
 
   def show
     @post = Post.find_by(id: params[:id])
-    redirect_to posts_index_path, flash: { notice: 'データが存在しませんやり直してください' } if @post.blank?
+    redirect_to posts_index_path, flash: { notice: t('.no_data') } if @post.blank?
   end
 
   def new
@@ -17,7 +17,7 @@ class PostsController < ApplicationController
   def create
     @post = Post.create(post_params)
     @post.save!
-    redirect_to '/posts/index', flash: { notice: '投稿を作成しました' }
+    redirect_to '/posts/index', flash: { notice: t('.success_create') }
   rescue StandardError
     render 'posts/new'
   end
@@ -25,26 +25,26 @@ class PostsController < ApplicationController
   def edit
     @post = Post.find(params[:id])
     # TODO: : notice->errorに修正します。(viewも修正)
-    render :edit, flash: { notice: 'データが存在しませんやり直してください' } if @post.blank?
+    render :edit, flash: { notice: t('.no_data') } if @post.blank?
   end
 
   def update
     @post = Post.find(params[:id])
     @post.update(post_params)
-    flash[:notice] = '投稿を編集しました'
+    flash[:notice] = t('.success_edit')
     redirect_to '/posts/index'
   rescue StandardError
-    flash[:notice] = '予期せぬエラーの為投稿を編集出来ませんでした'
+    flash.now[:notice] = t('.no_edit')
     render :edit
   end
 
   def destroy
     @post = Post.find(params[:id])
     @post.destroy!
-    flash[:notice] = '投稿を削除しました'
+    flash[:notice] = t('.success_delete')
     redirect_to posts_index_path
   rescue StandardError
-    flash[:error] = '投稿を削除出来ませんでした'
+    flash.now[:error] = t('.no_delete')
     render :edit
   end
 
