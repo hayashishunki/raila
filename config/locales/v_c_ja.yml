@@ -12,3 +12,9 @@ ja:
       no_data: 'データが存在しませんやり直してください'
     show:
       no_data: 'データが存在しませんやり直してください'
+  users:
+    create:
+      success_user: 'ユーザー登録が完了しました'
+    update:
+      edit_user: 'ユーザーの編集が完了しました'
+
