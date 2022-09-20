@@ -3,10 +3,9 @@
 # Table name: users
 #
 #  id         :bigint           not null, primary key
-#  email      :string
+#  email      :string           not null
 #  image_name :string
-#  name       :string
-#  password   :string
+#  name       :string           not null
 #  created_at :datetime         not null
 #  updated_at :datetime         not null
 #
