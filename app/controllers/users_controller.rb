@@ -1,4 +1,6 @@
 class UsersController < ApplicationController
+  before_action :user_not_authorized, only: %i[index]
+
   def index
     @users = User.all.order(created_at: :desc)
   end
@@ -13,7 +15,7 @@ class UsersController < ApplicationController
   end
 
   def create
-    @user = User.create(user_params, image_name: 'icon1.png')
+    @user = User.create(user_params.merge(image_name: 'icon1.png' ))
     @user.save!
     session[:user_id] = @user.id
     redirect_to "/users/#{@user.id}", flash: { notice: '新規ユーザーを登録しました' }
@@ -28,8 +30,7 @@ class UsersController < ApplicationController
 
   def update
     @user = User.find(params[:id])
-    @user.name = user_params[:name]
-    @user.email = user_params[:email]
+    @user.update(user_params)
     if params[:image]
       @user.image_name = "#{@user.id}.jpg"
       image = params[:image]
