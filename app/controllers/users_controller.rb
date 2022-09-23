@@ -13,12 +13,11 @@ class UsersController < ApplicationController
 
   def create
     @user = User.new(name: params[:name], email: params[:email], image_name: 'icon1.png')
-    if @user.save
-      flash[:notice] = 'ユーザー登録が完了しました'
-      redirect_to "/users/#{@user.id}"
-    else
-      render 'users/new'
-    end
+    @user.save!
+    flash[:notice] = t('.success_user')
+    redirect_to "/users/#{@user.id}"
+  rescue StandardError
+    render 'users/new'
   end
 
   def edit
@@ -35,7 +34,7 @@ class UsersController < ApplicationController
       File.binwrite("public/user_images/#{@user.image_name}", image.read)
     end
     if @user.save
-      flash[:notice] = '投稿の編集が完了しました'
+      flash[:notice] = t('.edit_user')
       redirect_to "/users/#{@user.id}"
     else
       render 'users/edit'

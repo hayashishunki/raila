@@ -1,3 +1,5 @@
+# frozen_string_literal: true
+
 Rails.application.routes.draw do
   post "users/:id/update", to: "users#update"
   get "users/:id/edit", to: "users#edit"
@@ -14,7 +16,6 @@ Rails.application.routes.draw do
   post "posts/:id/update", to: "posts#update"
   post "posts/:id/destroy", to: "posts#destroy"
 
-  get "/", to: "home#top"
-  get "about", to: "home#about"
+  get '/', to: 'home#top'
+  get 'about', to: 'home#about'
 end
-

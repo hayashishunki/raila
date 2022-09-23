@@ -1,3 +1,5 @@
+# frozen_string_literal: true
+
 source 'https://rubygems.org'
 git_source(:github) { |repo| "https://github.com/#{repo}.git" }
 
@@ -27,8 +29,11 @@ gem 'annotate'
 # ===========================================================
 # 時間系
 # ===========================================================
-gem 'tzinfo-data', platforms: [:mingw, :mswin, :x64_mingw, :jruby]
+gem 'tzinfo-data', platforms: %i[mingw mswin x64_mingw jruby]
 
+# ===========================================================
+# heroku環境
+# ===========================================================
 gem 'net-imap'
 gem 'net-pop'
 gem 'net-smtp'
@@ -37,7 +42,7 @@ gem 'net-smtp'
 # 開発/テスト環境のみ
 # ===========================================================
 group :development, :test do
-  gem 'byebug', platforms: [:mri, :mingw, :x64_mingw]
+  gem 'byebug', platforms: %i[mri mingw x64_mingw]
 end
 
 # ===========================================================
