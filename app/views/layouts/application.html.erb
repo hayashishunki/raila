@@ -23,7 +23,7 @@
         <li><%= link_to "新規登録", "/signup" %></li>
       </ul>
     </header>
-    <% if flash[:notice] %>
+    <% if flash.present? %>
       <div class="flash">
         <%= flash[:notice] %>
       </div>
