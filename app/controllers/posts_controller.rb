@@ -19,7 +19,7 @@ class PostsController < ApplicationController
     @post.save!
     redirect_to '/posts/index', flash: { notice: t('.success_create') }
   rescue StandardError
-    render 'posts/new'
+    render :new
   end
 
   def edit
@@ -31,21 +31,17 @@ class PostsController < ApplicationController
   def update
     @post = Post.find(params[:id])
     @post.update(post_params)
-    flash[:notice] = t('.success_edit')
-    redirect_to '/posts/index'
+    redirect_to posts_index_path, flash: { notice: t('.success_edit')}
   rescue StandardError
-    flash.now[:notice] = t('.no_edit')
-    render :edit
+    render :edit, flash: { notice: t('.no_edit')}
   end
 
   def destroy
     @post = Post.find(params[:id])
     @post.destroy!
-    flash[:notice] = t('.success_delete')
-    redirect_to posts_index_path
+    redirect_to posts_index_path, flash: { notice: t('.success_delete')}
   rescue StandardError
-    flash.now[:error] = t('.no_delete')
-    render :edit
+    render :edit, flash: { notice: t('.no_delete')}
   end
 
   private
