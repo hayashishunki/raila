@@ -4,7 +4,8 @@ class UsersController < ApplicationController
   end
 
   def show
-    @user = User.find_by(id: params[:id])
+    @user = User.find(params[:id])
+    redirect_to users_index_path, flash: { notice: t('.no_data') } if @user.blank?
   end
 
   def new
@@ -14,18 +15,17 @@ class UsersController < ApplicationController
   def create
     @user = User.new(name: params[:name], email: params[:email], image_name: 'icon1.png')
     @user.save!
-    flash[:notice] = t('.success_user')
-    redirect_to "/users/#{@user.id}"
+    redirect_to "/users/#{@user.id}", flash: { notice: t('.success_user') }
   rescue StandardError
-    render 'users/new'
+    render :new
   end
 
   def edit
-    @user = User.find_by(id: params[:id])
+    @user = User.find(params[:id])
   end
 
   def update
-    @user = User.find_by(id: params[:id])
+    @user = User.find(params[:id])
     @user.name = params[:name]
     @user.email = params[:email]
     if params[:image]
@@ -33,11 +33,9 @@ class UsersController < ApplicationController
       image = params[:image]
       File.binwrite("public/user_images/#{@user.image_name}", image.read)
     end
-    if @user.save
-      flash[:notice] = t('.edit_user')
-      redirect_to "/users/#{@user.id}"
-    else
-      render 'users/edit'
-    end
+    @user.save!
+    redirect_to users_index_path, flash: { notice: t('.success_edit') }
+  rescue StandardError
+    render :edit
   end
 end

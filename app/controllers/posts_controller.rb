@@ -6,7 +6,7 @@ class PostsController < ApplicationController
   end
 
   def show
-    @post = Post.find_by(id: params[:id])
+    @post = Post.find(params[:id])
     redirect_to posts_index_path, flash: { notice: t('.no_data') } if @post.blank?
   end
 
@@ -17,7 +17,7 @@ class PostsController < ApplicationController
   def create
     @post = Post.create(post_params)
     @post.save!
-    redirect_to '/posts/index', flash: { notice: t('.success_create') }
+    redirect_to posts_index_path, flash: { notice: t('.success_create') }
   rescue StandardError
     render :new
   end

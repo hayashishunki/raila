@@ -3,8 +3,6 @@ ja:
     attributes:
       post:
         content: 内容
-        # error_show: データが存在しませんやり直してください 
-        # success_create: 投稿完了しました
       user:
         name: 名前
         email: メールアドレス

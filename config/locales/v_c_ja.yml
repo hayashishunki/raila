@@ -17,4 +17,8 @@ ja:
       success_user: 'ユーザー登録が完了しました'
     update:
       edit_user: 'ユーザーの編集が完了しました'
-
+    show:
+      no_data: 'データが存在しませんやり直してください'
+    update:
+      success_edit: 'ユーザー情報を編集しました'
+      no_edit: '予期せぬエラーの為投稿を編集出来ませんでした'
