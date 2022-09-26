@@ -1,5 +1,6 @@
 class UsersController < ApplicationController
   before_action :user_not_authorized, only: %i[index edit show update destroy]
+  before_action :limit_login_user, only: %i[new create login_form login]
 
   def index
     @users = User.all.order(created_at: :desc)
