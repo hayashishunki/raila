@@ -1,5 +1,5 @@
 class UsersController < ApplicationController
-  before_action :user_not_authorized, only: %i[index]
+  before_action :user_not_authorized, only: %i[index edit show update destroy]
 
   def index
     @users = User.all.order(created_at: :desc)

@@ -1,5 +1,5 @@
 class PostsController < ApplicationController
-  before_action :user_not_authorized, only: %i[index]
+  before_action :user_not_authorized
   
   def index
     @posts = Post.all.order(created_at: :desc)
