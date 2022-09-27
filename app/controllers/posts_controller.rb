@@ -19,7 +19,7 @@ class PostsController < ApplicationController
     @post.save!
     redirect_to posts_index_path, flash: { notice: '投稿を作成しました' } 
   rescue StandardError
-    render :new
+    render :new, flash: { notice: '投稿に失敗しましたやり直してください' }
   end
 
   def edit
@@ -47,6 +47,6 @@ class PostsController < ApplicationController
   private
 
   def post_params
-    params.permit(:content)
+    params.permit(:content).merge(user_id: @current_user.id)
   end
 end
