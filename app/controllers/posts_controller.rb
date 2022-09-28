@@ -7,7 +7,7 @@ class PostsController < ApplicationController
 
   def show
     @post = Post.find_by(id: params[:id])
-    @user = User.find_by(id: @post.user_id)
+    @user = @post.user_return
   rescue
     redirect_to posts_index_path, flash: { notice: 'データが存在してませんやり直してください' } if @post.blank?
   end
