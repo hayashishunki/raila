@@ -1,6 +1,7 @@
 class PostsController < ApplicationController
   before_action :user_not_authorized
-  
+  before_action :ensure_correct_user, only: %i[edit update destroy]
+
   def index
     @posts = Post.all.order(created_at: :desc)
   end
@@ -50,5 +51,14 @@ class PostsController < ApplicationController
 
   def post_params
     params.permit(:content).merge(user_id: @current_user.id)
+  end
+
+  def ensure_correct_user
+    @post = Post.find(params[:id])
+    if @post.user_id != @current_user.id
+      redirect_to '/posts/index', flash: { notice: '権限がありません' }
+    end
+  rescue
+    redirect_to '/login', flash: { notice: '異常を検知しましたやり直してください' }
   end
 end
