@@ -7,7 +7,7 @@ class PostsController < ApplicationController
   end
 
   def show
-    @post = Post.find_by(id: params[:id])
+    @post = Post.find(params[:id])
     @user = @post.user_return
   rescue
     redirect_to posts_index_path, flash: { notice: 'データが存在してませんやり直してください' } if @post.blank?
@@ -26,13 +26,13 @@ class PostsController < ApplicationController
   end
 
   def edit
-    @post = Post.find(params[:id])
+    @post = Post.find_by(post_params_id)
     # TODO: : notice->errorに修正します。(viewも修正)
     render :edit, flash: { notice: '無効な値ですやり直してください' } if @post.blank?
   end
 
   def update
-    @post = Post.find(params[:id])
+    @post = Post.find_by(post_params_id)
     @post.update(post_params)
     redirect_to posts_index_path, flash: { notice: '投稿編集しました' }
   rescue StandardError
@@ -40,7 +40,7 @@ class PostsController < ApplicationController
   end
 
   def destroy
-    @post = Post.find_by(id: params[:id])
+    @post = Post.find(params[:id])
     @post.destroy!
     redirect_to posts_index_path, flash: { notice: '投稿を削除しました' }
   rescue StandardError
@@ -53,12 +53,16 @@ class PostsController < ApplicationController
     params.permit(:content).merge(user_id: @current_user.id)
   end
 
+  def post_params_id
+    params.permit(:id)
+  end
+
   def ensure_correct_user
     @post = Post.find(params[:id])
     if @post.user_id != @current_user.id
-      redirect_to '/posts/index', flash: { notice: '権限がありません' }
+      redirect_to posts_index_path, flash: { notice: '権限がありません' }
     end
   rescue
-    redirect_to '/login', flash: { notice: '異常を検知しましたやり直してください' }
+    redirect_to users_login_path, flash: { notice: '異常を検知しましたやり直してください' }
   end
 end

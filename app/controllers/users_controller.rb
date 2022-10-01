@@ -8,7 +8,7 @@ class UsersController < ApplicationController
   end
 
   def show
-    @user = User.find_by(id: params[:id])
+    @user = User.find(params[:id])
     redirect_to posts_index_path, flash: { notice: 'データが存在しませんやり直してください' } if @user.blank?
   end
 
@@ -26,12 +26,12 @@ class UsersController < ApplicationController
   end
 
   def edit
-    @user = User.find(params[:id])
-    render :edit, flash: { notice: '無効な値ですやり直してください' } if @user.blank?
+    @user = User.find_by(user_params_id)
+    render :edit, flash: { notice: 'エラーが発生やり直してください' } if @user.blank?
   end
 
   def update
-    @user = User.find(params[:id])
+    @user = User.find_by(user_params_id)
     @user.update(user_params)
     if params[:image]
       @user.image_name = "#{@user.id}.jpg"
@@ -48,7 +48,7 @@ class UsersController < ApplicationController
   end
 
   def login
-    @user = User.find_by(email: params[:email], password: params[:password])
+    @user = User.find_by(user_params)
     if @user
       session[:user_id] = @user.id
       redirect_to posts_index_path, flash: { notice: 'ログインしました' }
@@ -69,6 +69,10 @@ class UsersController < ApplicationController
 
   def user_params
     params.permit(:name, :email, :password)
+  end
+
+  def user_params_id
+    params.permit(:id)
   end
 
   def correct_user
