@@ -8,7 +8,6 @@ default: &default
 
 production:
   <<: *default
-      url: <%= ENV['DATABASE_URL'] %>
       database: d4j7d3srnelddg
 
 development:
