@@ -1,4 +1,10 @@
+# frozen_string_literal: true
+
 Rails.application.routes.draw do
+  get "login", to: "users#login_form"
+  post "login", to: "users#login"
+  post "logout", to: "users#logout"
+
   post "users/:id/update", to: "users#update"
   get "users/:id/edit", to: "users#edit"
   post "users/create", to: "users#create"
@@ -14,7 +20,6 @@ Rails.application.routes.draw do
   post "posts/:id/update", to: "posts#update"
   post "posts/:id/destroy", to: "posts#destroy"
 
-  get "/", to: "home#top"
+  root "home#top"
   get "about", to: "home#about"
 end
-
