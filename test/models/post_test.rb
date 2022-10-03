@@ -2,11 +2,11 @@
 #
 # Table name: posts
 #
-#  id         :bigint           not null, primary key
-#  content    :text
-#  created_at :datetime         not null
-#  updated_at :datetime         not null
-#  user_id    :integer
+#  id            :bigint           not null, primary key
+#  content(内容) :text             not null
+#  created_at    :datetime         not null
+#  updated_at    :datetime         not null
+#  user_id       :integer
 #
 require "test_helper"
 

@@ -6,11 +6,6 @@ default: &default
   username: root
   password: password
 
-production:
-  <<: *default
-  url: <%= ENV['DATABASE_URL'] %>
-  database: d4j7d3srnelddg
-
 development:
   <<: *default
   database: app_name_development
